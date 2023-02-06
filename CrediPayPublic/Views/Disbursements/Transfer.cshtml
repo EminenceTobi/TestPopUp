@@ -1,0 +1,186 @@
+﻿@model CommsPayDeveloperWeb.Views.Shared.Responses.AppResponse<CommsPayDeveloperWeb.Presentation.Response.CollectionAccountResponse>
+@using CommsPayDeveloperWeb.Models.Enum
+@{
+    ViewData["Title"] = "Transfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (Model != null)
+    {
+        if (Model.Status != false)
+        {
+            var accounts = Model.Data;
+
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h4 class="card-title">Business Transfers</h4>
+                </div>
+                <div class="card-body pt-2">
+                    <div class="alert alert-info">
+                        <div class="alert-body fw-normal">
+                            You can top up your wallet by doing a transfer from your mobile/internet banking app or USSD to the account number
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="card-header border-bottom">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="">Amount in Wallet</label>
+
+                                            value="@accounts.walletInfo.AccountBalance"
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="">Available Balance</label>
+                                            <!--<input type="email"
+                                               class="form-control"
+                                               placeholder="Email"
+                                               readonly="readonly"-->
+                                            @*value="@businessdata.Email"*@
+                                            <!--name=""
+                                            id="" />-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-top">
+
+                                    <div class="col-md-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="">Available Balance</label>
+                                            <input type="email"
+                                                   class="form-control"
+                                                   placeholder="Email"
+                                                   readonly="readonly"
+                                                   @*value="@businessdata.Email"*@
+                                                   name=""
+                                                   id="" />
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label class="form-label" for="">Available Balance</label>
+                                                <input type="email"
+                                                       class="form-control"
+                                                       placeholder="Email"
+                                                       readonly="readonly"
+                                                       @*value="@businessdata.Email"*@
+                                                       name=""
+                                                       id="" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- Account Detail -->
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h4 class="card-title">Account Information</h4>
+                </div>
+                <div class="card-body my-2 py-25">
+                    @{
+                        if (accounts.walletCollections.Count() > 0)
+                        {
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-nowrap text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-start">Currency</th>
+                                                    <th>Source Account Number</th>
+                                                    <th>Source Account Name</th>
+                                                    <th>Payment Channel</th>
+                                                    <th>Payable Amount</th>
+                                                    <th>Charge Fee</th>
+                                                    <th>Payment Reference</th>
+                                                    <th>Payment Link Code</th>
+                                                    <th>TransactionDate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var account in accounts.walletCollections)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-start">
+                                                                <span class="fw-bolder">@account.CurrencyCode</span>
+                                                            </td>
+                                                            <td>@account.SourceAccountNumber</td>
+                                                            <td>@account.SourceAccountName</td>
+                                                            <td>@account.Channel</td>
+                                                            <td>@account.Amount</td>
+                                                            <td>@account.ChargeFee</td>
+                                                            <td>@account.TrasactionReference</td>
+                                                            <td>@account.PaymentLinkCode</td>
+                                                            <td>@account.TransactionDate</td>
+
+                                                        </tr>
+                                                    }
+
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="misc-inner p-2 p-sm-3">
+                                <div class="w-100 text-center">
+                                    <h2 class="mb-1">Something went wrong 🕵🏻‍♀️</h2>
+                                    <p class="mb-2">Oops! 😖 Something went wrong, when trying to load the request.</p>
+                                    <img width="200" class="img-fluid" src="~/app-assets/images/pages/no-data.svg" alt="Error page" />
+                                    <div class="col-12 mt-4">
+                                        <a class="btn btn-primary mb-2 btn-sm-block" href="javascript:void()" data-bs-toggle="modal" data-bs-target="#inviteNewUserModal">Invite New User</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!-- / Account Detail-->
+
+
+        }
+        else
+        {
+            <div class="misc-inner p-2 p-sm-3">
+                <div class="w-100 text-center">
+                    <h2 class="mb-1">No information found 🕵🏻‍♀️</h2>
+                    <p class="mb-2">Oops! 😖 no information found for the request.</p>
+                    <a class="btn btn-primary mb-2 btn-sm-block" href="#">Reload</a>
+                    <img class="img-fluid" src="~/app-assets/images/pages/no-data.svg" alt="Error page" />
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="misc-inner p-2 p-sm-3">
+            <div class="w-100 text-center">
+                <h2 class="mb-1">Something went wrong 🕵🏻‍♀️</h2>
+                <p class="mb-2">Oops! 😖 Something went wrong, when trying to load the info.</p>
+                <a class="btn btn-primary mb-2 btn-sm-block" href="#">Try again</a>
+                <img class="img-fluid" src="~/app-assets/images/pages/web_search.svg" alt="Error page" />
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,154 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="CommsPay">
+    <title>Testing - CrediPay</title>
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.min.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/authentication.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <style>
+        .ios-strech-fix {
+            height: intrinsic !important;
+        }
+    </style>
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+
+
+                <!-- Copy to clipboard -->
+                <section id="">
+                    <!-- Apply Job Card -->
+                    <div class="col-lg-7 col-md-10 offset-lg-3 offset-md-1">
+                        <div class="card card-apply-job">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <div class="d-flex flex-row">
+                                        <div class="avatar me-1">
+                                            <img src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                 alt="Avatar"
+                                                 width="42"
+                                                 height="42" />
+                                        </div>
+                                        <div class="user-info">
+                                            <h5 class="mb-0">Mittie Evans</h5>
+                                            <small class="text-muted">Updated 12m ago</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill badge-light-primary">Design</span>
+                                </div>
+                                <h5 class="apply-job-title">Need a designer to form branding essentials for my business.</h5>
+                                <p class="card-text mb-2">
+                                    Design high-quality designs, graphics, mock-ups and layouts for both new and existing web sites/ web
+                                    applications / mobile applications.
+                                </p>
+                                <div class="apply-job-package bg-light-primary rounded">
+                                    <div>
+                                        <sup class="text-body"><small>$</small></sup>
+                                        <h2 class="d-inline me-25">9,800</h2>
+                                        <sub class="text-body"><small>/ month</small></sub>
+                                    </div>
+                                    <span class="badge rounded-pill badge-light-primary">Full Time</span>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="button" onclick="payWithCrediPay()" class="btn btn-primary">Apply For This Job</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ Apply Job Card -->
+                </section>
+                <!--/ Copy to clipboard -->
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN Vendor JS-->
+    <script src="/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/app-assets/js/core/app-menu.min.js"></script>
+    <script src="/app-assets/js/core/app.min.js"></script>
+    <!-- END: Theme JS-->
+    <script src="/public/credipay-payment.min.js?00"></script>
+    <!-- BEGIN: Page JS-->
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function () {
+            if (feather) {
+                feather.replace({ width: 14, height: 14 });
+            }
+        })
+    </script>
+
+    <script>
+        function payWithCrediPay() {
+            //e.preventDefault();
+            let handler = new credipayPopup({
+                key: 'pk_test_fb24197ac74d4006aa23f326d090b6eb', // Replace with your public key
+                email: 'oniyideoluwatobiloba767@gmail.com',
+                firstName: 'Oluwatobi',
+                lastName: 'Oniyide',
+                orderId: 'ref7674',
+                splitObj: [],
+                amount: 10000 * 100,
+                ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function () {
+                    alert('Window closed.');
+                },
+                callback: function (response) {
+                    let message = 'Payment complete! Reference: ' + response.reference;
+                    alert(message);
+                }
+            });
+            handler.openCredipayPopup();
+        }
+    </script>
+</body>
+<!-- END: Body-->
+</html>

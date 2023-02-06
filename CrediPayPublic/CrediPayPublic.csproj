@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Presentation\**" />
+    <Compile Remove="Views\Business\**" />
+    <Compile Remove="Views\Dashboard\**" />
+    <Compile Remove="Views\Disbursements\**" />
+    <Compile Remove="Views\Setting\**" />
+    <Compile Remove="wwwroot\images\**" />
+    <Content Remove="Presentation\**" />
+    <Content Remove="Views\Business\**" />
+    <Content Remove="Views\Dashboard\**" />
+    <Content Remove="Views\Disbursements\**" />
+    <Content Remove="Views\Setting\**" />
+    <Content Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="Presentation\**" />
+    <EmbeddedResource Remove="Views\Business\**" />
+    <EmbeddedResource Remove="Views\Dashboard\**" />
+    <EmbeddedResource Remove="Views\Disbursements\**" />
+    <EmbeddedResource Remove="Views\Setting\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <None Remove="Presentation\**" />
+    <None Remove="Views\Business\**" />
+    <None Remove="Views\Dashboard\**" />
+    <None Remove="Views\Disbursements\**" />
+    <None Remove="Views\Setting\**" />
+    <None Remove="wwwroot\images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\BusinessController.cs" />
+    <Compile Remove="Controllers\DashboardController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.11" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+    <PackageReference Include="StackExchange.Redis" Version="2.5.43" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="WebPush-NetCore" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\Requests\" />
+    <Folder Include="wwwroot\app-assets\js\pwabuilder-sw\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,160 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<section id="dashboard_section" class="">
+</section>
+@{
+    var theuserrole = HttpContextAccessor.HttpContext.Session.GetString("role").ToLower();
+    if (theuserrole == "admin")
+    {
+        <script>
+              //Dashboard information Function
+               loadDashboard();
+                @*$(document).ready(function () {
+
+                    setInterval(function () {
+                       loadDashboard();
+                    }, 60000);
+                });*@
+            function loadDashboard() {
+                $("#dashboard_section").load("@Url.Action("_AdminDashboard", "Dashboard")", {}, function (responseTxt, statusTxt, xhr) {
+                    if (statusTxt == "success") {
+                        feather.replace();
+                    }
+                });
+                }
+        </script>
+    }
+    else if (theuserrole == "manager")
+    {
+        <script>
+              //Dashboard information Function
+                                  loadDashboard();
+
+            @* $(document).ready(function () {
+                    setInterval(function () {
+                      loadDashboard();
+                    }, 60000);
+                });*@
+            function loadDashboard() {
+                $("#dashboard_section").load("@Url.Action("_ManagerDashboard", "Dashboard")", {}, function (responseTxt, statusTxt, xhr) {
+                    if (statusTxt == "success") {
+                        feather.replace();
+                    }
+                });
+            }
+        </script>
+    }
+    else if (theuserrole == "paypoint")
+    {
+        <script>
+         //Dashboard information Function
+                             loadDashboard();
+
+            @* $(document).ready(function () {
+                    setInterval(function () {
+                        loadDashboard();
+                    }, 60000);
+                });*@
+            function loadDashboard() {
+                $("#dashboard_section").load("@Url.Action("_PaypointDashboard", "Dashboard")", {}, function (responseTxt, statusTxt, xhr) {
+                    if (statusTxt == "success") {
+                        feather.replace();
+                    }
+                });
+            }
+        </script>
+
+    }
+
+    <script type="text/javascript">
+   let isAlreadySubscribed=false;
+        if ('serviceWorker' in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/ServiceWorker.js")
+                    .then((reg) => {
+                        if (Notification.permission === "granted") {
+                            getSubscription(reg);
+                        } else if (Notification.permission === "blocked") {
+                            $("#NoSupport").show();
+                        } else {
+                           requestNotificationAccess(reg);
+                        }
+                    });
+            });
+        } else {
+            $("#NoSupport").show();
+        }
+
+        function requestNotificationAccess(reg) {
+            Notification.requestPermission(function (status) {
+                if (status == "granted") {
+                    getSubscription(reg);
+                }
+            });
+        }
+
+        function getSubscription(reg) {
+            reg.pushManager.getSubscription().then(function (sub) {
+                if (sub === null) {
+                    reg.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: '@HttpContextAccessor.HttpContext.Session.GetString("applicationServerKey")'
+                    }).then(function (sub) {
+                        fillSubscribeFields(sub);
+                    }).catch(function (e) {
+                        console.error("Unable to subscribe to push", e);
+                    });
+                } else {
+                    if(!isAlreadySubscribed)
+                    fillSubscribeFields(sub);
+                }
+            });
+        }
+
+        function fillSubscribeFields(sub)
+        {
+
+             var obj = {};
+    obj.endpoint = sub.endpoint;
+    obj.p256dh = arrayBufferToBase64(sub.getKey("p256dh"));
+    obj.auth =arrayBufferToBase64(sub.getKey("auth"));
+    var jsonData = JSON.stringify(obj);
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json charset=utf-8',
+        url: '/dashboard/subscribe',
+        data: jsonData,
+        dataType: 'json',
+        success: function (response)
+        {
+            isAlreadySubscribed=true;
+
+        },
+        error: function (error)
+        {
+
+        },
+        failure: function (failure)
+        {
+
+        }
+
+          });
+        };
+
+        function arrayBufferToBase64(buffer)
+        {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+    </script>
+}

@@ -1,0 +1,292 @@
+﻿@model CommsPayDeveloperWeb.Presentation.Response.TransactionAppResponse<CommsPayDeveloperWeb.Presentation.Response.ManagerDashboardResponse>
+@using System.Globalization
+<!-- Manager Dashboard -->
+@{
+    if (Model != null)
+    {
+        if (Model.Value != null)
+        {
+            var data = Model.Value;
+            <!-- Statistics Card -->
+            <div class="col-xl-12 col-md-12 col-12">
+                <div class="card card-statistics">
+                    <div class="card-header">
+                        <h4 class="card-title">Statistics</h4>
+                        <div class="d-flex align-items-center">
+                            @*                            <p class="card-text font-small-2 me-25 mb-0">Updated 6 sec ago</p>
+                            *@
+                        </div>
+                    </div>
+                    <div class="card-body statistics-body">
+                        <div class="row">
+                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="d-flex flex-row">
+                                    <div class="avatar bg-light-primary me-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="trending-up" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="my-auto">
+                                        @{
+                                            if (data.TransactionCount > 999999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.TransactionCount.ToString("0,,,.###B", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TransactionCount > 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.TransactionCount.ToString("0,,.##M", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TransactionCount > 99999 && data.TransactionCount <= 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.TransactionCount.ToString("#,##0,K", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="fw-bolder mb-0">@string.Format("{0:n}", data.TransactionCount).Split(".")[0]</h4>
+                                            }
+                                        }
+                                        <p class="card-text font-small-3 mb-0">Transactions</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                                <div class="d-flex flex-row">
+                                    <div class="avatar bg-light-info me-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="credit-card" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="my-auto">
+                                        @{
+                                            if (data.PaypointCount > 999999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.PaypointCount.ToString("0,,,.###B", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.PaypointCount > 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.PaypointCount.ToString("0,,.##M", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.PaypointCount > 99999 && data.PaypointCount <= 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">@data.PaypointCount.ToString("#,##0,K", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="fw-bolder mb-0">@string.Format("{0:n}", data.PaypointCount).Split(".")[0]</h4>
+                                            }
+                                        }
+                                        <p class="card-text font-small-3 mb-0">Paypoints</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                <div class="d-flex flex-row">
+                                    <div class="avatar bg-light-danger me-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="arrow-down-left" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="my-auto">
+                                        @{
+                                            if (data.TotalReceived > 999999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalReceived.ToString("0,,,.###B", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TotalReceived > 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalReceived.ToString("0,,.##M", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TotalReceived > 99999 && data.TotalReceived <= 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalReceived.ToString("#,##0,K", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @string.Format("{0:n}", data.TotalReceived).Split(".")[0]</h4>
+                                            }
+                                        }
+                                        <p class="card-text font-small-3 mb-0">Total Received</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                <div class="d-flex flex-row">
+                                    <div class="avatar bg-light-success me-2">
+                                        <div class="avatar-content">
+                                            <i data-feather="arrow-up-right" class="avatar-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="my-auto">
+                                        @{
+                                            if (data.TotalPayout > 999999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalPayout.ToString("0,,,.###B", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TotalPayout > 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalPayout.ToString("0,,.##M", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else if (data.TotalPayout > 99999 && data.TotalPayout <= 999999)
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @data.TotalPayout.ToString("#,##0,K", CultureInfo.InvariantCulture)</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="fw-bolder mb-0">&#8358; @string.Format("{0:n}", data.TotalPayout).Split(".")[0]</h4>
+                                            }
+                                        }
+                                        <p class="card-text font-small-3 mb-0">Total Payout</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Statistics Card -->
+            <div class="row match-height">
+                <!-- Company Table Card -->
+                <div class="col-lg-8 col-12">
+                    <div class="card card-company-table" style="min-height:200px">
+                        <div class="card-body p-1">
+                            <div class="table-responsive p-1">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Paypoint</th>
+                                            <th>Transaction Reference</th>
+                                            <th>Timestamp</th>
+                                            <th>Sender Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (data.Last10Transaction.Count() > 0)
+                                            {
+                                                foreach (var item in data.Last10Transaction)
+                                                {
+                                                    <tr>
+                                                        <td>@item.PaypointName</td>
+                                                        <td>@item.TransactionReference</td>
+                                                        <td>@item.TransactionDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                                                        <td>@(item.SourceAccountName??"NA")</td>
+                                                        <td>
+                                                            @{
+                                                                if (item.TransactionType.ToString() == "Credit")
+                                                                {
+                                                                    <span class="text-success">NGN @string.Format("{0:n}", item.Amount)</span>
+                                                                }
+                                                                else if (item.TransactionStatus.ToString() == "Debit")
+                                                                {
+                                                                    <span class="text-danger">NGN @string.Format("{0:n}", item.Amount)</span>
+                                                                }
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td class="text-center text-muted" colspan="5">No transaction received today</td></tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Company Table Card -->
+                <!-- Developer Meetup Card -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card card-developer-meetup card-transaction" style="min-height:200px">
+                        <div class="meetup-img-wrapper rounded-top text-center">
+                            <img src="/app-assets/images/illustration/transfer_money.svg?00" alt="" height="170" />
+                        </div>
+                        <div class="card-body">
+                            <div class="meetup-header d-flex align-items-center">
+                                <div class="meetup-day">
+                                    <h6 class="mb-0">TOP</h6>
+                                    <h3 class="mb-0">5</h3>
+                                </div>
+                                <div class="my-auto">
+                                    <h4 class="card-title mb-25 text-primary">Top Performing Paypoint(s)</h4>
+                                    <p class="card-text mb-0">Top performing paypoint for the month</p>
+                                </div>
+                            </div>
+                            @{
+                                if (data.TopPayPoint.Count() > 0)
+                                {
+                                    foreach (var item in data.TopPayPoint)
+                                    {
+                                        <div class="transaction-item">
+                                            <div class="d-flex">
+                                                <div class="avatar bg-light-primary rounded float-start">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="map-pin" class="avatar-icon font-medium-3"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="transaction-percentage">
+                                                    <h6 class="transaction-title">@item.PaypointName</h6>
+                                                    <small>In @item.BranchName branch</small>
+                                                </div>
+                                            </div>
+                                            @{
+                                                if (item.TransactionAmount > 999999999)
+                                                {
+                                                    <div class="fw-bolder text-success">&#8358; @item.TransactionAmount.ToString("0,,,.###B", CultureInfo.InvariantCulture)</div>
+                                                }
+                                                else if (item.TransactionAmount > 999999)
+                                                {
+                                                    <div class="fw-bolder text-success">&#8358; @item.TransactionAmount.ToString("0,,.##M", CultureInfo.InvariantCulture)</div>
+                                                }
+                                                else if (item.TransactionAmount > 99999 && item.TransactionAmount <= 999999)
+                                                {
+                                                    <div class="fw-bolder text-success">&#8358; @item.TransactionAmount.ToString("#,##0,K", CultureInfo.InvariantCulture)</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="fw-bolder text-success">&#8358; @string.Format("{0:n}", item.TransactionAmount).Split(".")[0]</div>
+                                                }
+                                            }
+                                        </div>
+
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!--/ Developer Meetup Card -->
+            </div>
+        }
+        else
+        {
+            <div class="misc-inner p-2 p-sm-3">
+                <div class="w-100 text-center">
+                    <h2 class="mb-1">No information found 🕵🏻‍♀️</h2>
+                    <p class="mb-2">Oops! 😖 no information found for the request.</p>
+                    <img width="200" class="img-fluid" src="~/app-assets/images/pages/no-data.svg?00" alt="Error page" />
+                    <div class="col-12 mt-4">
+                        <a class="btn btn-primary mb-2 btn-sm-block" href="/dashboard">Reload</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="misc-inner p-2 p-sm-3">
+            <div class="w-100 text-center">
+                <h2 class="mb-1">No information found 🕵🏻‍♀️</h2>
+                <p class="mb-2">Oops! 😖 no information found for the request.</p>
+                <img width="200" class="img-fluid" src="~/app-assets/images/pages/no-data.svg?00" alt="Error page" />
+                <div class="col-12 mt-4">
+                    <a class="btn btn-primary mb-2 btn-sm-block" href="/dashboard">Reload</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+<!-- Manager Dashboard  -->

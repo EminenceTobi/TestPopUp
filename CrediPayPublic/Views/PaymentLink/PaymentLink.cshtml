@@ -1,0 +1,164 @@
+﻿@model CrediPayPublic.Views.Shared.Responses.GenericResponse<CrediPayPublic.Views.PaymentLink.Responses.PaymentLinkInfo>
+@{
+   
+    Layout = "~/Views/Shared/_LayoutLink.cshtml";
+}
+@{
+    if (Model != null)
+    {
+        if (Model.Status == true)
+        {
+
+            var pageInfo = Model.Data;
+            ViewData["Title"] = pageInfo.PageName;
+            @*<div class="alert alert-danger" role="alert">
+                <div class="alert-body text-center">
+                    This is a test page where you can perceive how payment pages work. Avoid sharing with your clients.
+                </div>
+            </div>*@
+            <div class="auth-wrapper auth-basic px-2">
+                <div class="auth-inner my-2">
+                    <!-- Payment Link Demo  -->
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <a href="https://www.credipay.io/" class="brand-logo">
+                                <img src="/app-assets/images/logo/logo-lg.png" class="f-img img-fluid ios-strech-fix" width="200" />
+                            </a>
+                            <h4 class="card-title mb-1 text-center">@pageInfo.PageName</h4>
+                            <p class="card-text text-center mb-1 text-uppercase">BY @pageInfo.BusinessName</p>
+                            <form class="auth-register-form mt-1">
+                                <div class="mb-1">
+                                    <label for="paymentlink_firstname" class="form-label">First name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="paymentlink_firstname"
+                                           name="paymentlink_firstname"
+                                           placeholder="johndoe"
+                                           aria-describedby="paymentlink_firstname"
+                                           tabindex="1"
+                                           autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="paymentlink_lastname" class="form-label">Last name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="paymentlink_lastname"
+                                           name="paymentlink_lastname"
+                                           placeholder="johndoe"
+                                           aria-describedby="paymentlink_lastname"
+                                           tabindex="1"
+                                           autofocus />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="paymentlink_email" class="form-label">Email</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="paymentlink_email"
+                                           name="paymentlink_email"
+                                           placeholder="Email address"
+                                           aria-describedby="paymentlink_email"
+                                           tabindex="2" />
+                                </div>
+                                @if (pageInfo.CollectCustomerPhone == true)
+                                {
+                                    <div class="mb-1">
+                                        <label for="paymentlink_phone" class="form-label">Phone</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="paymentlink_phone"
+                                               name="paymentlink_phone"
+                                               placeholder="Phone number"
+                                               aria-describedby="paymentlink_phone"
+                                               tabindex="2" />
+                                    </div>
+                                }
+                                <div class="mb-1">
+                                    <label for="register-password" class="form-label">Amount to charge</label>
+                                    <div class="input-group input-group-merge mb-2">
+                                        <span class="input-group-text">NGN</span>
+                                        <input type="text" class="form-control" readonly="readonly" value=" @string.Format("{0:n}", pageInfo.Amount)" placeholder="Amount" aria-label="Amount" />
+                                    </div>
+                                </div>
+                                @{
+                                    if (!string.IsNullOrEmpty(pageInfo.AdditionalInformation))
+                                    {
+                                        string[] additionalItemArray = pageInfo.AdditionalInformation.Split(new string[] { "," }, StringSplitOptions.None);
+                                        List<string> additionalItemList = additionalItemArray.ToList();
+                                        foreach(string additionalItem in additionalItemList)
+                                        {
+                                            <div class="mb-1">
+                                                <label for="" class="form-label">@additionalItem</label>
+                                                <input type="text"
+                                                       class="form-control additional-info-response"
+                                                       placeholder=""
+                                                       aria-describedby=""
+                                                       tabindex="2" />
+                                            </div>
+                                        }
+                                    }
+                                }
+                                <button type="button" class="btn btn-primary w-100" tabindex="5">Pay now</button>
+                            </form>
+                            <div class="divider">
+                                <div class="divider-text">Note</div>
+                            </div>
+                            <div class="auth-footer-btn d-flex justify-content-center">
+                                <p class="text-center">
+                                    <span><small>This is a test transaction. You will receive test details to use at checkout.</small></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Payment Link Demo -->
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="auth-wrapper auth-basic px-2">
+                <div class="auth-inner my-2">
+                    <!-- Page Not Found -->
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <a href="https://www.credipay.io/" class="brand-logo">
+                                <img src="/app-assets/images/logo/logo-lg.png" class="f-img img-fluid ios-strech-fix" width="200" />
+                            </a>
+                            <div class="misc-inner p-2 p-sm-3">
+                                <div class="w-100 text-center">
+                                    <h2 class="mb-1">Page Not Found 🕵🏻‍♀️</h2>
+                                    <p class="mb-2">Oops! 😖 The requested URL was not found on this server.</p>
+                                    <img class="img-fluid" src="/app-assets/images/pages/page-404.svg" alt="Error page" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Page Not Found -->
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <div class="auth-wrapper auth-basic px-2">
+            <div class="auth-inner my-2">
+                <!-- Page Not Found -->
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <a href="https://www.credipay.io/" class="brand-logo">
+                            <img src="/app-assets/images/logo/logo-lg.png" class="f-img img-fluid ios-strech-fix" width="200" />
+                        </a>
+                        <div class="misc-inner p-2 p-sm-3">
+                            <div class="w-100 text-center">
+                                <h2 class="mb-1">Page Not Found 🕵🏻‍♀️</h2>
+                                <p class="mb-2">Oops! 😖 The requested URL was not found on this server.</p>
+                                <img class="img-fluid" src="/app-assets/images/pages/page-404.svg" alt="Error page" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Page Not Found -->
+            </div>
+        </div>
+    }
+}

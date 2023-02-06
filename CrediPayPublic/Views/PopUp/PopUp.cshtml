@@ -1,0 +1,734 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "PopUp";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Pop up</title>
+    <link rel="apple-touch-icon" href="/app-assets/images/ico/apple-icon-120.html">
+    <link rel="shortcut icon" type="image/x-icon" href="https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/wizard/bs-stepper.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/select/select2.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/bordered-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/themes/semi-dark-layout.min.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/plugins/forms/form-wizard.min.css">
+    <link rel="stylesheet" type="text/css" href="/app-assets/css/pages/authentication.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <style>
+        .pop-up-bg {
+            background-color: black!important;
+            background-color: rgba(0, 0, 0, 0.6)!important;
+            -webkit-transition: 0.5s!important;
+            overflow: auto!important;
+            transition: all 0.3s linear!important;
+        }
+    </style>
+    <style>
+        @@media all and (min-width: 480px) {
+            .desktop-content {
+                display: block;
+            }
+
+            .mobile-content {
+                display: none;
+            }
+        }
+
+        @@media all and (max-width: 479px) {
+            .desktop-content {
+                display: none;
+            }
+
+            .mobile-content {
+                display: block;
+            }
+        }
+
+        @@media all and (max-width: 959px) {
+            .desktop-content {
+                display: block;
+            }
+
+            .mobile-content {
+                display: none;
+            }
+        }
+
+        @@media all and (max-width: 479px) {
+            .desktop-content {
+                display: none;
+            }
+
+            .mobile-content {
+                display: block;
+            }
+        }
+    </style>
+    <style>
+        .pop-up-wrapper.pop-up-basic {
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .pop-up-wrapper {
+            display: flex;
+            flex-basis: 100%;
+            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
+            width: 100%;
+        }
+
+            .pop-up-wrapper.pop-up-basic .pop-up-inner {
+                min-width: 400px;
+            }
+
+            .pop-up-wrapper.pop-up-basic .pop-up-inner {
+                position: relative;
+            }
+
+            .pop-up-wrapper .pop-up-inner {
+                width: 100%;
+            }
+
+        .bg-nav-ul {
+            background: #F5FBFC !important;
+        }
+
+        .pay-with-transfer-trigger-md.active {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            --bs-text-opacity: 1;
+            color: #fff !important;
+            border-radius: 1rem !important;
+        }
+
+            .pay-with-transfer-trigger-md.active svg {
+                fill: #fff !important;
+            }
+
+                .pay-with-transfer-trigger-md.active svg path {
+                    fill: #fff !important;
+                }
+
+        .pay-with-card-trigger-md.active {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            --bs-text-opacity: 1;
+            color: #fff !important;
+            border-radius: 1rem !important;
+        }
+
+            .pay-with-card-trigger-md.active svg {
+                fill: #fff !important;
+            }
+
+                .pay-with-card-trigger-md.active svg path {
+                    fill: #fff !important;
+                }
+    </style>
+    <style>
+        #pay_with_transfer_trigger_lg:hover svg {
+            fill: #fff !important;
+        }
+
+            #pay_with_transfer_trigger_lg:hover svg path {
+                fill: #fff !important;
+            }
+
+            #pay_with_transfer_trigger_lg:hover svg plygon {
+                fill: #fff !important;
+            }
+
+            #pay_with_transfer_trigger_lg:hover svg circle {
+                fill: #fff !important;
+            }
+
+        .pay-with-transfer-trigger-lg.active {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            color: #fff !important;
+        }
+
+            .pay-with-transfer-trigger-lg.active span {
+                --bs-text-opacity: 1;
+                color: #fff !important;
+            }
+
+        .pay-with-transfer-trigger-lg:hover span {
+            color: #fff !important;
+        }
+
+        .pay-with-transfer-trigger-lg span {
+            --bs-text-opacity: 1;
+            color: #0365A2 !important;
+        }
+
+        .pay-with-transfer-trigger-lg:hover {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            color: #fff !important;
+        }
+
+        .pay-with-transfer-trigger-lg.active svg {
+            fill: #fff !important;
+        }
+
+            .pay-with-transfer-trigger-lg.active svg path {
+                fill: #fff !important;
+            }
+
+            .pay-with-transfer-trigger-lg.active svg:hover plygon {
+                fill: #fff !important;
+            }
+
+            .pay-with-transfer-trigger-lg.active svg:hover circle {
+                fill: #fff !important;
+            }
+    </style>
+    <style>
+        #pay_with_card_trigger_lg:hover svg {
+            fill: #fff !important;
+        }
+
+            #pay_with_card_trigger_lg:hover svg path {
+                fill: #fff !important;
+            }
+
+            #pay_with_card_trigger_lg:hover svg plygon {
+                fill: #fff !important;
+            }
+
+            #pay_with_card_trigger_lg:hover svg circle {
+                fill: #fff !important;
+            }
+
+        .pay-with-card-trigger-lg.active {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            color: #fff !important;
+        }
+
+            .pay-with-card-trigger-lg.active span {
+                --bs-text-opacity: 1;
+                color: #fff !important;
+            }
+
+        .pay-with-card-trigger-lg:hover span {
+            color: #fff !important;
+        }
+
+        .pay-with-card-trigger-lg span {
+            --bs-text-opacity: 1;
+            color: #0365A2 !important;
+        }
+
+        .pay-with-card-trigger-lg:hover {
+            --bs-bg-opacity: 1;
+            background-color: #0365A2 !important;
+            color: #fff !important;
+        }
+
+        .pay-with-card-trigger-lg.active svg {
+            fill: #fff !important;
+        }
+
+            .pay-with-card-trigger-lg.active svg path {
+                fill: #fff !important;
+            }
+
+            .pay-with-card-trigger-lg.active svg:hover plygon {
+                fill: #fff !important;
+            }
+
+            .pay-with-card-trigger-lg.active svg:hover circle {
+                fill: #fff !important;
+            }
+    </style>
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+<body class="pop-up-bg vertical-layout vertical-menu-modern blank-page navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- start: desktop-->
+                <section class="desktop-content">
+                    <div class="pop-up-wrapper pop-up-basic px-2">
+                        <div class="pop-up-inner my-2">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-10 offset-lg-3 offset-md-1">
+                                    <div class="card">
+                                        <div class="row match-height">
+                                            <!-- start: desktop side-->
+                                            <div class="col-md-4 col-lg-4 border-end" style="background: #F5FBFC">
+                                                <div class="row">
+                                                    <!-- start: side - merchant logo-->
+                                                    <div class="col-12 mt-1 mb-2">
+                                                        <img src="/app-assets/images/credipay.png" class="merchant-logo" width="95" height="26" />
+                                                    </div>
+                                                    <!-- end: side - merchant logo-->
+                                                    <!-- start: side - customer email-->
+                                                    <div class="col-12 mb-1">
+                                                        <h5 class="customer-email">
+                                                        </h5>
+                                                    </div>
+                                                    <!-- end: side - customer email-->
+                                                    <!-- start: side - amount-->
+                                                    <div class="col-12">
+                                                        <h4 class="fw-bolder">
+                                                            Pay <span class="transaction-amount"></span>
+                                                        </h4>
+                                                    </div>
+                                                    <!-- end: side - amount-->
+                                                    <div class="col-12 mt-4">
+                                                        <h5 class="fw-bolder">PAY USING</h5>
+                                                    </div>
+                                                    <!-- start: side - pay with transfer trigger-->
+                                                    <div id="pay_with_transfer_trigger_lg" class="col-12 d-grid mt-1 both-payment-type-trigger-lg pay-with-transfer-trigger-lg">
+                                                        <a href="javascript:void()" class="m-75 both-payment-type-trigger-lg pay-with-transfer-trigger-lg">
+                                                            <i>
+                                                                <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill="#005F9D" d="M3.56137 14V7.45849L0 4.32159L5.69078 3.00425V3.0041C5.52456 4.12349 5.88067 5.25674 6.66059 6.08987C6.70777 6.14038 6.75658 6.18958 6.80673 6.23716L4.22797 7.51363V11.6204L5.21355 8.91327L14.7817 2.28916L12.9665 3.18768V3.18783C12.9064 2.5715 12.6921 1.97938 12.3427 1.46392L18.6667 0L9.57238 12.753L7.17976 10.6456L3.56137 14Z" />
+                                                                </svg>
+                                                            </i>
+                                                            <span class="fs-4 fw-bolder p-1">Transfer</span>
+                                                        </a>
+                                                    </div>
+                                                    <!-- end: side - pay with transfer trigger-->
+                                                    <!-- start: side - pay with card trigger-->
+                                                    <div id="pay_with_card_trigger_lg" class="col-12 d-grid mt-1 both-payment-type-trigger-lg pay-with-card-trigger-lg active">
+                                                        <a href="javascript:void()" class="m-75 both-payment-type-trigger-lg pay-with-card-trigger-lg active">
+                                                            <i class="">
+                                                                <svg width="19" height="15" viewBox="0 0 19 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill="#005F9D" d="M18.6667 5.94444V13.7222C18.6667 13.9285 18.5683 14.1263 18.3933 14.2722C18.2183 14.4181 17.9809 14.5 17.7333 14.5H0.933333C0.685798 14.5 0.448401 14.4181 0.273367 14.2722C0.098333 14.1263 0 13.9285 0 13.7222V5.94444H18.6667ZM18.6667 4.38889H0V1.27778C0 1.0715 0.098333 0.873667 0.273367 0.727806C0.448401 0.581944 0.685798 0.5 0.933333 0.5H17.7333C17.9809 0.5 18.2183 0.581944 18.3933 0.727806C18.5683 0.873667 18.6667 1.0715 18.6667 1.27778V4.38889ZM12.1333 10.6111V12.1667H15.8667V10.6111H12.1333Z" />
+                                                                </svg>
+                                                            </i>
+                                                            <span class="fs-4 fw-bolder p-1">Card</span>
+                                                        </a>
+                                                    </div>
+                                                    <!-- end: side - pay with card trigger-->
+                                                    <div class="col-12 mt-5 text-center">
+                                                        <h5>Powered by</h5>
+                                                    </div>
+                                                    <div class="col-12 text-center mb-1">
+                                                        <img src="/app-assets/images/credipay.png" width="95" height="26" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end: desktop side-->
+                                            <div class="col-md-8 col-lg-8">
+                                                <div class="divider is-test-divider d-none">
+                                                    <div class="divider-text"><span class="badge badge-light-warning">This is a test page no actual money is deducted</span></div>
+                                                </div>
+                                                <!-- start: desktop card payment-->
+                                                <section id="desktop_card_payment_section" class="both-desktop-payment-section general-popup-section m-3">
+                                                </section>
+                                                <!-- end: desktop card payment-->
+                                                <!-- start: desktop transfer payment-->
+                                                <section id="desktop_transfer_payment_section" class="both-desktop-payment-section general-popup-section m-3 d-none">
+                                                </section>
+                                                <!-- end: desktop transfer payment-->
+                                                <!-- start: desktop - error message -->
+                                                <section class="general-popup-section all-error-message-section d-none">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center mb-1">
+                                                            <img src="/app-assets/images/warning-icon.png" width="100" />
+                                                        </div>
+                                                        <div class="d-grid w-100 text-center">
+                                                            <p class="fs-5 fw-bolder text-secondary error-message-text"></p>
+                                                        </div>
+                                                        <div class="d-grid w-100 text-center">
+                                                            <div class="mt-1">
+                                                                <button type="button" class="btn btn-outline-secondary btn-sm btn-cancel-popup">
+                                                                    Close
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- end: desktop - error message -->
+                                                <!-- start: desktop - payment success -->
+                                                <section class="general-popup-section transaction-success-section d-none">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center mb-1">
+                                                            <h3 class="text-primary">Payment Success</h3>
+                                                        </div>
+                                                        <div class="col-12 text-center mb-4">
+                                                            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M60 120C93.1371 120 120 93.1371 120 60C120 26.8629 93.1371 0 60 0C26.8629 0 0 26.8629 0 60C0 93.1371 26.8629 120 60 120Z" fill="#005F9D" />
+                                                                <path d="M54.2773 85.3304L36.3203 62.2394L46.7631 54.1173L55.2655 65.05L83.9914 34.7266L93.5972 43.8272L54.2773 85.3304Z" fill="white" />
+                                                            </svg>
+
+                                                        </div>
+                                                        <div class="d-grid w-100 mt-1">
+                                                            <button class="btn btn-primary btn-lg btn-reture-to-website">
+                                                                Return to Website
+                                                            </button>
+                                                        </div>
+                                                        <div class="d-grid w-100 mt-1 text-center">
+                                                            <p class="fs-4 fw-bolder text-primary">
+                                                                This page will redirect automatically
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- end: desktop - payment success -->
+                                                <!-- start: desktop - payment failed -->
+                                                <section class="general-popup-section transaction-fail-section d-none m-3">
+                                                    <div class="row">
+                                                        <div class="col-12 text-center mb-1">
+                                                            <h3 class="text-primary">Payment Not Received</h3>
+                                                        </div>
+                                                        <div class="col-12 text-center mb-4">
+                                                            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M60 0C26.9163 0 0 26.9163 0 60C0 93.0836 26.9163 120 60 120C93.0836 120 120 93.0836 120 60C120 26.9163 93.0836 0 60 0ZM84.9894 78.4615L78.4615 84.9894L60 66.5279L41.5385 84.9894L35.0106 78.4615L53.4721 60L35.0106 41.5385L41.5385 35.0106L60 53.4721L78.4615 35.0106L84.9894 41.5385L66.5279 60L84.9894 78.4615Z" fill="#BB3121" />
+                                                            </svg>
+                                                        </div>
+                                                        <div class="d-grid w-100 mt-1">
+                                                            <button type="button" class="btn btn-primary btn-lg btn-retry-payment">
+                                                                Try Again
+                                                            </button>
+                                                        </div>
+                                                        <div class="d-grid w-100 mt-1 text-center">
+                                                            <a href="javascript:void()" class="text-decoration-underline fs-4 fw-bolder link-cancel-payment">
+                                                                Cancel Payment
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- end: desktop - payment failed -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- end: desktop-->
+                <!-- start: mobile-->
+                <section class="mobile-content">
+                    <div class="pop-up-wrapper pop-up-basic px-2">
+                        <div class="pop-up-inner my-2">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <div class="card">
+                                        <div class="divider is-test-divider d-none">
+                                            <div class="divider-text"><span class="badge badge-light-warning">This is a test page no actual money is deducted</span></div>
+                                        </div>
+                                        <div class="card-header">
+                                            <div class="col-4">
+                                                <img src="/app-assets/images/credipay.png" class="merchant-logo" width="95" height="26" />
+                                            </div>
+                                            <div class="col-8 text-end">
+                                                <p class="fs-15 customer-email"></p>
+                                                <h5 class="fw-bolder">  Pay <span class="transaction-amount"></span></h5>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="nav nav-tabs nav-fill bg-nav-ul" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link pay-with-transfer-trigger-md"
+                                                       id="pay_with_transfer_trigger_md_tab"
+                                                       data-bs-toggle="tab"
+                                                       href="#mobile_transfer_payment_tab_pane"
+                                                       aria-controls="transfer"
+                                                       role="tab"
+                                                       aria-selected="true">
+                                                        <i>
+                                                            <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill="#005F9D" d="M3.56137 14V7.45849L0 4.32159L5.69078 3.00425V3.0041C5.52456 4.12349 5.88067 5.25674 6.66059 6.08987C6.70777 6.14038 6.75658 6.18958 6.80673 6.23716L4.22797 7.51363V11.6204L5.21355 8.91327L14.7817 2.28916L12.9665 3.18768V3.18783C12.9064 2.5715 12.6921 1.97938 12.3427 1.46392L18.6667 0L9.57238 12.753L7.17976 10.6456L3.56137 14Z" />
+                                                            </svg>
+                                                        </i> Transfer
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link active pay-with-card-trigger-md"
+                                                       id="pay_with_card_trigger_md_tab"
+                                                       data-bs-toggle="tab"
+                                                       href="#mobile_card_payment_tab_pane"
+                                                       aria-controls="card"
+                                                       role="tab"
+                                                       aria-selected="false">
+                                                        <i>
+                                                            <svg width="19" height="15" viewBox="0 0 19 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill="#005F9D" d="M18.6667 5.94444V13.7222C18.6667 13.9285 18.5683 14.1263 18.3933 14.2722C18.2183 14.4181 17.9809 14.5 17.7333 14.5H0.933333C0.685798 14.5 0.448401 14.4181 0.273367 14.2722C0.098333 14.1263 0 13.9285 0 13.7222V5.94444H18.6667ZM18.6667 4.38889H0V1.27778C0 1.0715 0.098333 0.873667 0.273367 0.727806C0.448401 0.581944 0.685798 0.5 0.933333 0.5H17.7333C17.9809 0.5 18.2183 0.581944 18.3933 0.727806C18.5683 0.873667 18.6667 1.0715 18.6667 1.27778V4.38889ZM12.1333 10.6111V12.1667H15.8667V10.6111H12.1333Z" />
+                                                            </svg>
+                                                        </i> Card
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <!-- start: mobile - transfer payment-->
+                                                <div class="tab-pane" id="mobile_transfer_payment_tab_pane" aria-labelledby="pay_with_transfer_trigger_md_tab" role="tabpanel">
+                                                    <section id="mobile_transfer_payment_section" class="both-mobile-payment-section general-popup-section mt-3">
+                                                    </section>
+                                                    <!-- start: mobile error message -->
+                                                    <section class="general-popup-section all-error-message-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <img src="/app-assets/images/icon/warning-icon.png" width="100" />
+                                                            </div>
+                                                            <div class="d-grid w-100 text-center">
+                                                                <p class="fs-5 fw-bolder text-secondary error-message-text"></p>
+                                                            </div>
+                                                            <div class="d-grid w-100 text-center">
+                                                                <div class="mt-1">
+                                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-cancel-popup">
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile error message -->
+                                                    <!-- start: mobile - payment success -->
+                                                    <section class="general-popup-section transaction-success-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <h3 class="text-primary">Payment Success</h3>
+                                                            </div>
+                                                            <div class="col-12 text-center mb-4">
+                                                                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M60 120C93.1371 120 120 93.1371 120 60C120 26.8629 93.1371 0 60 0C26.8629 0 0 26.8629 0 60C0 93.1371 26.8629 120 60 120Z" fill="#005F9D" />
+                                                                    <path d="M54.2773 85.3304L36.3203 62.2394L46.7631 54.1173L55.2655 65.05L83.9914 34.7266L93.5972 43.8272L54.2773 85.3304Z" fill="white" />
+                                                                </svg>
+
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1">
+                                                                <button class="btn btn-primary btn-lg btn-reture-to-website">
+                                                                    Return to Website
+                                                                </button>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1 text-center">
+                                                                <p class="fs-4 fw-bolder text-primary">
+                                                                    This page will redirect automatically
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile - payment success -->
+                                                    <!-- start: mobile - payment failed -->
+                                                    <section class="general-popup-section transaction-fail-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <h3 class="text-primary">Payment Not Received</h3>
+                                                            </div>
+                                                            <div class="col-12 text-center mb-4">
+                                                                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M60 0C26.9163 0 0 26.9163 0 60C0 93.0836 26.9163 120 60 120C93.0836 120 120 93.0836 120 60C120 26.9163 93.0836 0 60 0ZM84.9894 78.4615L78.4615 84.9894L60 66.5279L41.5385 84.9894L35.0106 78.4615L53.4721 60L35.0106 41.5385L41.5385 35.0106L60 53.4721L78.4615 35.0106L84.9894 41.5385L66.5279 60L84.9894 78.4615Z" fill="#BB3121" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1">
+                                                                <button type="button" class="btn btn-primary btn-lg btn-retry-payment">
+                                                                    Try Again
+                                                                </button>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1 text-center">
+                                                                <a href="javascript:void()" class="text-decoration-underline fs-4 fw-bolder link-cancel-payment">
+                                                                    Cancel Payment
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile - payment failed -->
+                                                </div>
+                                                <!-- end: mobile - transfer payment-->
+                                                <!-- start: mobile - card payment tab-->
+                                                <div class="tab-pane active" id="mobile_card_payment_tab_pane" aria-labelledby="pay_with_card_trigger_md_tab" role="tabpanel">
+                                                    <section id="mobile_card_payment_section" class="both-mobile-payment-section general-popup-section mt-3">
+                                                    </section>
+                                                    <!-- start: mobile - error message -->
+                                                    <section class="general-popup-section all-error-message-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <img src="/app-assets/images/icon/warning-icon.png" width="100" />
+                                                            </div>
+                                                            <div class="d-grid w-100 text-center">
+                                                                <p class="fs-5 fw-bolder text-secondary error-message-text"></p>
+                                                            </div>
+                                                            <div class="d-grid w-100 text-center">
+                                                                <div class="mt-1">
+                                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-cancel-popup">
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile - error message -->
+                                                    <!-- start: mobile - payment success -->
+                                                    <section class="general-popup-section transaction-success-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <h3 class="text-primary">Payment Success</h3>
+                                                            </div>
+                                                            <div class="col-12 text-center mb-4">
+                                                                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M60 120C93.1371 120 120 93.1371 120 60C120 26.8629 93.1371 0 60 0C26.8629 0 0 26.8629 0 60C0 93.1371 26.8629 120 60 120Z" fill="#005F9D" />
+                                                                    <path d="M54.2773 85.3304L36.3203 62.2394L46.7631 54.1173L55.2655 65.05L83.9914 34.7266L93.5972 43.8272L54.2773 85.3304Z" fill="white" />
+                                                                </svg>
+
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1">
+                                                                <button class="btn btn-primary btn-lg btn-reture-to-website">
+                                                                    Return to Website
+                                                                </button>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1 text-center">
+                                                                <p class="fs-4 fw-bolder text-primary">
+                                                                    This page will redirect automatically
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile - payment success -->
+                                                    <!-- start: mobile - payment failed -->
+                                                    <section class="general-popup-section transaction-fail-section d-none mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center mb-1">
+                                                                <h3 class="text-primary">Payment Not Received</h3>
+                                                            </div>
+                                                            <div class="col-12 text-center mb-4">
+                                                                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M60 0C26.9163 0 0 26.9163 0 60C0 93.0836 26.9163 120 60 120C93.0836 120 120 93.0836 120 60C120 26.9163 93.0836 0 60 0ZM84.9894 78.4615L78.4615 84.9894L60 66.5279L41.5385 84.9894L35.0106 78.4615L53.4721 60L35.0106 41.5385L41.5385 35.0106L60 53.4721L78.4615 35.0106L84.9894 41.5385L66.5279 60L84.9894 78.4615Z" fill="#BB3121" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1">
+                                                                <button type="button" class="btn btn-primary btn-lg btn-retry-payment">
+                                                                    Try Again
+                                                                </button>
+                                                            </div>
+                                                            <div class="d-grid w-100 mt-1 text-center">
+                                                                <a href="javascript:void()" class="text-decoration-underline fs-4 fw-bolder link-cancel-payment">
+                                                                    Cancel Payment
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- end: mobile - payment failed -->
+                                                </div>
+                                                <!-- end: mobile - card payment tab-->
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-12 mt-1 mb-1 text-center">
+                                                <p class="text-secondary"> Powered by</p>
+                                                <img src="/app-assets/images/logo/logo-lg.png" width="95" height="26" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- end: mobile-->
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+    <script src="/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <script src="/app-assets/vendors/js/forms/cleave/cleave.min.js"></script>
+    <script src="/app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
+    <script src="/app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="/app-assets/js/scripts/extensions/ext-component-blockui.js"></script>
+
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/app-assets/js/core/app-menu.min.js"></script>
+    <script src="/app-assets/js/core/app.min.js"></script>
+    <script src="/app-assets/js/scripts/customizer.min.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <!--Reference the SignalR library. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.5/signalr.min.js" integrity="sha512-Wj6cUe+56vJ4FtfeF4QqPHy4VGO9gZ2iU8GFlLRjawhx1f4sW3BezJLU1ewaZl3bZV8iya0EJOmRY5SD9XTwvw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/app-assets/js/scripts/pages/pop-up/pop-up.js?v1.70590"></script>
+    <script src="/app-assets/js/scripts/pages/pop-up/credipay-payment.js?v1.374775"></script>
+    <!-- END: Page JS-->
+    <script>
+        $(window).on('load', function () {
+            if (feather) {
+                feather.replace({ width: 14, height: 14 });
+            }
+        })
+    </script>
+    <script>
+        @* $(document).ready(function(){
+        var key = @ViewData["Key"];
+    <!--var key = "@HttpContextAccessor.HttpContext.Session.GetString("publickey")";
+    var url = '@Configuration.GetSection("signalRUrl").Value';
+    var display = document.querySelector('#transfer_request_time');
+    const connection = new signalR.HubConnectionBuilder()
+                .withUrl(''+url+'alert')
+                .build();
+              connection.on("PopAlert", (message) => {
+                  if (--timer > 0) {
+                      $(".general-popup-section").addClass("d-none");
+                      $(".transaction-success-section").removeClass("d-none");
+                      startTimer(0, display);
+                      return window.parent.postMessage(message, client);
+                  }
+                });
+              connection.start()
+                .then(() => console.log('Connection started'))
+                .then(() => addToGroup())
+                    .catch(function (err) {
+                        $(".general-popup-section").addClass("d-none");
+                        $(".transaction-fail-section").removeClass("d-none");
+                        startTimer(0, display);
+                    return console.error(err);
+                });
+
+         let addToGroup =  function (){
+            connection.invoke('JoinGroup', key);
+       }
+    });*@
+    </script>
+</body>
+<!-- END: Body-->
+</html>
